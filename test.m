@@ -28,5 +28,15 @@ pascalImages = 'TrainVal/VOCdevkit/VOC2011/';
 % newKeyPoints = transformWithHomography(keypoints,H);
 % show_keypoints(newKeyPoints);
 
+% points = detectSURFFeatures(imgray);
+% imshow(imgray); hold on;
+% plot(points.selectStrongest(100));
+% 
+% figure()
+% [outputImage,H] = homography(imgray,10,0, 0);
+% points_2 = detectSURFFeatures(outputImage);
+% imshow(outputImage); hold on;
+% plot(points_2.selectStrongest(100));
+
 
 matched_points = get_match_points(imgray,15,0,0,keypoints);
