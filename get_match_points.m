@@ -5,7 +5,7 @@ function matched_points = get_match_points(image, angle, tx, ty, keypoints)
     newKeyPoints = transformWithHomography(keypoints,H);
 %     warpImage = image;
 %     H = eye(3);
-    newKeyPoints = keypoints;
+%     newKeyPoints = keypoints;
     [meshXOnImage,meshYOnImage] = meshgrid(1:size(warpImage,2), 1:size(warpImage,1));
     meshXOnImage = meshXOnImage(:);
     meshYOnImage = meshYOnImage(:);
@@ -31,7 +31,7 @@ function matched_points = get_match_points(image, angle, tx, ty, keypoints)
     function d = getDistanceBetweenFeatures(f1,f2)
        d = norm(f1-f2)^2;
     end
-    pixel_threshold  = 8;
+    pixel_threshold  = 16;
     error_threshold = sqrt(2)*pixel_threshold; 
     
     matched_points= 0;
