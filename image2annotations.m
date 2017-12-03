@@ -28,6 +28,7 @@ function  im2annotation = image2annotations(imagesDir, annontationDir)
                     imageObject = im2annotation(char(imageName));
                     imageObject.annotations{end+1,1} = keypoints;
                     imageObject.annotationPaths{end+1,1} = xmlfile;
+                    im2annotation(char(imageName)) = imageObject;
                 end
             end
         end
