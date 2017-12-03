@@ -1,5 +1,5 @@
 % addpath('sift/');
-pascalImages = '/home/nilesh/acads/16720/Project/TrainVal/VOCdevkit/VOC2011/';
+pascalImages = 'TrainVal/VOCdevkit/VOC2011/';
 
 
 
