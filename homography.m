@@ -1,6 +1,12 @@
-function [warpIm, H, moveImageXY] = homography(im, theta, tx, ty)
-    H = [cosd(theta) -sind(theta) tx; ...
-    sind(theta) cosd(theta) ty; ...
+function [warpIm, H, moveImageXY] = homography(im, theta1, tx, ty)
+%     R1 = eye(3);
+%     R2 = [1 0 0 ; 0 cos(theta1) sin(theta1); 0 -sin(theta1) cos(theta1)];
+%     R2 = [1 0 0 ; 0 cos(theta1) sin(theta1); 0 -sin(theta1) cos(theta2)];
+%   
+%     R = eul2rotm([degtorad(theta1),0, degtorad(theta2)]);
+%     H  = [R(:,1:2)  [tx;ty;1]];
+    H = [cosd(theta1) -sind(theta1) tx; ...
+    sind(theta1) cosd(theta1) ty; ...
     0 0 1]; 
     tform = projective2d(H);
     corners = [1,1; 1, size(im,1),; size(im,2),1; size(im,2) size(im,1)];

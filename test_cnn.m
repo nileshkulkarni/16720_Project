@@ -67,11 +67,13 @@ for i = 1 : length(keys)
     
     % get matches using cnn features
     % for all rotation and translation values
-    for rot = 1 : length(rotation)
+    for i = 1 : length(rotation)
+         rot  = rotation(i);
         matches = getMatchesConv(net,img,rot,0,0,keypoints,pixel_threshold);
         matches_rot = [matches_rot, matches];
     end
-    for trans = 1 : length(translation)
+    for i = 1 : length(translation)
+        trans = translation(i);
         matches = getMatchesConv(net,img,0,trans,trans,keypoints,pixel_threshold);
         matches_trans = [matches_trans, matches];
     end        

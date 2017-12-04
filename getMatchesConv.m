@@ -27,10 +27,6 @@ function matched_points = getMatchesConv(net,image, angle, tx, ty, keypoints, pi
         matchingPairs(j,:) = [j ,mini];
     end
    
-    function d = getDistanceBetweenFeatures(f1,f2)
-       d = norm(f1-f2)^2;
-    end
-    pixel_threshold  = 8;
     error_threshold = sqrt(2)*pixel_threshold; 
     
     matched_points= 0;

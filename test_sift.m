@@ -1,12 +1,12 @@
 tic
 
 % random seed for reproducibility
-rng(0)
+rng(5)
 
 %% options 
-pixel_threshold = 8;
-num_keys = 110;
-rotation = -60 : 2 : 60;
+pixel_threshold = 10;
+num_keys = 1;
+rotation = -60 : 10 : 60;
 translation = -30 : 5 : 30;
 filename = strcat('sift_',string(pixel_threshold),'.mat');
 
@@ -15,6 +15,7 @@ imagesDir = 'TrainVal/VOCdevkit/VOC2011/JPEGImages';
 annotationsDir = 'annotations/';
 % get annotations for every image
 annotations = image2annotations(imagesDir, annotationsDir);
+% load('im2ann.mat');
 % image names are keys
 keys = annotations.keys;
 % randomly sample keys
@@ -32,7 +33,7 @@ detected_trans = 0;
 
 total_rot = 0;
 total_trans = 0;
-
+% keys{1,1} = '2007_000032';
 for i = 1 : length(keys)
     % get string key from cell array
     k = keys(i);
@@ -49,25 +50,28 @@ for i = 1 : length(keys)
         keypoints = [keypoints; ann{j,1}];
     end
     % scale keypoints with image size
+%     imSize = size(img);
+%     scale_x = imSize(2)/227.;
+%     scale_y = imSize(1)/227.;
+%     img = imresize(img, [227,227]);
     imSize = size(img);
-    scale_x = imSize(2)/227.;
-    scale_y = imSize(1)/227.;
-    img = imresize(img, [227,227]);
     img = rgb2gray(img);
-    keypoints(:,1) = keypoints(:,1)/double(scale_x);
-    keypoints(:,2) = keypoints(:,2)/double(scale_y);
+%     keypoints(:,1) = keypoints(:,1)/double(scale_x);
+%     keypoints(:,2) = keypoints(:,2)/double(scale_y);
     keypoints = round(keypoints);
     %remove keypoints with negative values
-    keypoints(keypoints(:,1) <= 0 | keypoints(:,1) > 227, :) = [];
-    keypoints(keypoints(:,2) <= 0 | keypoints(:,2) > 227, :) = [];
+    keypoints(keypoints(:,1) <= 0 | keypoints(:,1) > imSize(:,2), :) = [];
+    keypoints(keypoints(:,2) <= 0 | keypoints(:,2) > imSize(:,1), :) = [];
     
     % get matches using cnn features
     % for all rotation and translation values
-    for rot = 1 : length(rotation)
+    for i = 1 : length(rotation)
+        rot  = rotation(i);
         matches = get_match_points(img,rot,0,0,keypoints,pixel_threshold);
         matches_rot = [matches_rot, matches];
     end
-    for trans = 1 : length(translation)
+    for i = 1 : length(translation)
+        trans = translation(i);
         matches = get_match_points(img,0,trans,trans,keypoints,pixel_threshold);
         matches_trans = [matches_trans, matches];
     end        

@@ -45,11 +45,12 @@ function matched_points = get_match_points(image, angle, tx, ty, keypoints, pixe
     error_threshold = sqrt(2)*pixel_threshold; 
     
     matched_points= 0;
-    
+    predictedMataches = zeros(size(newKeyPoints));
     for i=1:size(matchingPairs,1)
        p1 = matchingPairs(i,1); p2 = matchingPairs(i,2);
        input = keypoints(p1,:);
-       predictedMatch = [meshXOnImage(p2) meshYOnImage(p2)];
+       predictedMataches(i,:) = [meshXOnImage(p2) meshYOnImage(p2)];
+       predictedMatch = predictedMataches(i,:);
        groundTruth = newKeyPoints(p1,:);
        er = norm(groundTruth - predictedMatch);
        if er < error_threshold
