@@ -1,4 +1,4 @@
-function matched_points = get_match_points(image, angle, tx, ty, keypoints)
+function matched_points = get_match_points(image, angle, tx, ty, keypoints, pixel_threshold)
     features = get_surf_descriptors_at(image,keypoints);
 
     [warpImage,H] = homography(image,angle,tx, ty);
@@ -14,24 +14,34 @@ function matched_points = get_match_points(image, angle, tx, ty, keypoints)
     
     %Find nearest matching feature match
     matchingPairs = zeros(size(features,1),2);
+%     for j=1:size(features,1)
+%         currentImageFeature = features(j,:);
+%         minDist = Inf;
+%         mini = nan;
+%         for i=1:size(allFeaturesWarpImage,1)
+%             d = getDistanceBetweenFeatures(currentImageFeature,allFeaturesWarpImage(i,:));
+%             if d < minDist
+%                 mini = i;
+%                 minDist = d;
+%             end
+%         end
+%         matchingPairs(j,:) = [j ,mini];
+%     end
+
     for j=1:size(features,1)
         currentImageFeature = features(j,:);
         minDist = Inf;
         mini = nan;
-        for i=1:size(allFeaturesWarpImage,1)
-            d = getDistanceBetweenFeatures(currentImageFeature,allFeaturesWarpImage(i,:));
-            if d < minDist
-                mini = i;
-                minDist = d;
-            end
-        end
+        difference = sum((allFeaturesWarpImage - currentImageFeature).^2, 2);
+        [minDist,mini] = min(difference);    
         matchingPairs(j,:) = [j ,mini];
     end
+% 
+    
    
     function d = getDistanceBetweenFeatures(f1,f2)
        d = norm(f1-f2)^2;
     end
-    pixel_threshold  = 16;
     error_threshold = sqrt(2)*pixel_threshold; 
     
     matched_points= 0;
