@@ -1,0 +1,14 @@
+% data = preprocess_rathus('rathaus'); save('rathaus.mat','data');
+% load('rathaus.mat');
+object1 = data{1,1};
+object2 = data{2,1};
+K = object1.cp.K;
+R = object1.cp.R;
+T = object1.cp.T;
+CM = K*[R' -R'*T'];
+points3D = object1.points3D;
+points3D = [points3D, ones(size(points3D,1),1)];
+keypoints = CM*points3D';
+keypoints = keypoints./keypoints(3,:);
+keypoints = keypoints';
+keypoints = keypoints(:,1:2);
