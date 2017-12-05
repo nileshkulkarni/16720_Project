@@ -60,7 +60,7 @@ function data = preprocess_rathus(datadir)
     end
     
     function image = createImageStruct(imageName, points3D, cp)
-        image.im = im2double(imread(imageName));
+        image.im = imread(imageName);
         image.path = imageName;
         image.points3D = points3D;
         image.cp = cp;
