@@ -10,16 +10,17 @@ function evaluateMethod(matchesFunction)
     tic
 
     % random seed for reproducibility
-    rng(5)
+    rng(1234)
 
     %% options 
     pixel_threshold = 8;
-    num_keys = 10;
+    num_keys = 110;
     rotation = -60 : 2 : 60;
     translation = -30 : 5 : 30;
     net_name = 'alexnet';
     conv_layer = 'conv5';
-    filename = strcat('cnn_',net_name, '_',conv_layer,'.mat');
+%     filename = strcat('cnn_',net_name, '_',conv_layer,'.mat');
+    filename = strcat(matchesFunction,'.mat');
 
     %% keypoint annotations for images paths
     imagesDir = 'TrainVal/VOCdevkit/VOC2011/JPEGImages';
@@ -105,7 +106,7 @@ function evaluateMethod(matchesFunction)
         matches_img_trans{i,1} = matches_trans;
         total_rot_count {i,1} = length(keypoints)*length(rotation);
         total_trans_count {i,1} = length(keypoints)*length(translation);
-
+        fprintf("Completed %d / %d\n", i, length(keys));
     %     img_count = img_count + 1;
     %     total_rot = total_rot + length(keypoints)*length(rotation);
     %     total_trans = total_trans + length(keypoints)*length(translation);
@@ -127,14 +128,14 @@ function evaluateMethod(matchesFunction)
     fprintf("TRANS | Average accuracy : %f%%\n", ...
         (100.0 * sum(sum(matches_img_trans)))/total_trans );
 
-%     save(filename,  'keys', ...
-%                     'pixel_threshold', ...
-%                     'rotation', ...
-%                     'translation', ...
-%                     'matches_rot', ...
-%                     'matches_trans', ...
-%                     'total_rot', ...
-%                     'total_trans');
+    save(filename,  'keys', ...
+                    'pixel_threshold', ...
+                    'rotation', ...
+                    'translation', ...
+                    'matches_rot', ...
+                    'matches_trans', ...
+                    'total_rot', ...
+                    'total_trans');
 
     toc
 

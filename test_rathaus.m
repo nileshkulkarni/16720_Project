@@ -1,4 +1,4 @@
-% data = preprocess_rathus('rathaus'); save('rathaus.mat','data');
+data = preprocess_rathus('rathaus'); save('rathaus.mat','data');
 % data = preprocess_rathus('semper'); save('brussel.mat','data');
 %data = preprocess_rathus('brussel'); save('brussel.mat','data');
 
@@ -6,8 +6,8 @@
 close all;
 %Nice pairs : {1,2}, {1,3}, {1,4}, {2,4}, {3,4}, {2,3}, {2,4}, {3,4}
 % Bad pairs :, {4,5}, {1,5}, {5,6} , {7,6}
-object1 = data{2,1};
-object2 = data{3,1};
+object1 = data{1,1};
+object2 = data{2,1};
 points3D = [object1.points3D; object2.points3D];
 keypoints1 = getkeypointsFrom3D(points3D, object1.cp);
 keypoints2 = getkeypointsFrom3D(points3D, object2.cp);

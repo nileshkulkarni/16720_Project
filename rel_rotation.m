@@ -37,6 +37,8 @@ for i = 1:length(data)
         y_rel = rad2deg(y_rel);
         z_rel = rad2deg(z_rel);
         fprintf("(%d,%d) R_rel angles : [%f,%f,%f]\n",i,j,x_rel,y_rel,z_rel);
+        fprintf("Rodrigues angle : %f\n\n\n",norm(rad2deg(rotationMatrixToVector(R_rel))));
+        
     end
 end
 

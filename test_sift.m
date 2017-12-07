@@ -106,5 +106,7 @@
 %                 'total_trans');
 % 
 % toc
-
+fprintf("SIFT\n")
 evaluateMethod("sift")
+fprintf("\n\nCNN\n")
+evaluateMethod("cnn")
